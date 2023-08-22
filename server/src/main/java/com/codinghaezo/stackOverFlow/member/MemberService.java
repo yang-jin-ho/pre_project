@@ -3,7 +3,6 @@ package com.codinghaezo.stackOverFlow.member;
 import com.codinghaezo.stackOverFlow.exception.BusinessLogicException;
 import com.codinghaezo.stackOverFlow.exception.ExceptionCode;
 
-import com.codinghaezo.stackOverFlow.logIn.OAuth2.OAuthProvider;
 import com.codinghaezo.stackOverFlow.logIn.utils.CustomAuthorityUtils;
 import com.codinghaezo.stackOverFlow.logIn.utils.UserAuthService;
 import org.springframework.context.annotation.Lazy;
