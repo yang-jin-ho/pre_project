@@ -2,6 +2,7 @@ package com.codinghaezo.stackOverFlow.member;
 
 import com.codinghaezo.stackOverFlow.audit.Auditable;
 import com.codinghaezo.stackOverFlow.domain.question.entity.Question;
+
 import lombok.*;
 
 import javax.persistence.*;
