@@ -1,5 +1,8 @@
 package com.codinghaezo.stackOverFlow.answer;
 
+import com.codinghaezo.stackOverFlow.answer.comment.Comment;
+import com.codinghaezo.stackOverFlow.answer.comment.CommentDto;
+import com.codinghaezo.stackOverFlow.answer.comment.CommentRepository;
 import com.codinghaezo.stackOverFlow.exception.BusinessLogicException;
 import com.codinghaezo.stackOverFlow.exception.ExceptionCode;
 import com.codinghaezo.stackOverFlow.member.Member;
@@ -21,10 +24,14 @@ public class AnswerService {
     private final AnswerRepository answerRepository;
     private final MemberRepository memberRepository;
 
+    private final CommentRepository commentRepository;
+
     public AnswerService(AnswerRepository answerRepository,
-                         MemberRepository memberRepository) {
+                         MemberRepository memberRepository,
+                         CommentRepository commentRepository) {
         this.answerRepository = answerRepository;
         this.memberRepository = memberRepository;
+        this.commentRepository = commentRepository;
     }
 
     public Answer findAnswer(long answerId) {
@@ -43,6 +50,20 @@ public class AnswerService {
             responseDTO.setUserEmail(answer.getMember().getEmail());
             responseDTO.setCreatedAt(answer.getCreatedAt());
             responseDTO.setUpdatedAt(answer.getModifiedAt());
+
+            List<AnswerDto.CommentResponseDTO> commentResponseDTOs = new ArrayList<>();
+            List<Comment> comments = commentRepository.findByAnswerIdWithDetails(answer.getAnswerId());
+            for(Comment comment : comments){
+               AnswerDto.CommentResponseDTO commentDTO = new AnswerDto.CommentResponseDTO();
+                commentDTO.setCommentId(comment.getCommentId());
+                commentDTO.setContent(comment.getContent());
+                commentDTO.setUserEmail(comment.getMember().getEmail());
+                commentDTO.setCreatedAt(comment.getCreatedAt());
+                commentDTO.setUpdatedAt(comment.getModifiedAt());
+                commentResponseDTOs.add(commentDTO);
+            }
+            responseDTO.setComments(commentResponseDTOs);
+
             responseDTOList.add(responseDTO);
         }
 

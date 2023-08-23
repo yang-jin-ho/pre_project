@@ -1,5 +1,6 @@
 package com.codinghaezo.stackOverFlow.answer;
 
+import com.codinghaezo.stackOverFlow.answer.comment.CommentDto;
 import com.codinghaezo.stackOverFlow.domain.question.entity.Question;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
@@ -32,6 +33,21 @@ public class AnswerDto {
         private LocalDateTime createdAt;
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
         private LocalDateTime updatedAt;
+        private List<CommentResponseDTO> comments;
+
+
+    }
+    @Getter
+    @Setter
+    public static class CommentResponseDTO {
+        private long commentId;
+        private String content;
+        private String userEmail;
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+        private LocalDateTime createdAt;
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+        private LocalDateTime updatedAt;
+
 
     }
 
