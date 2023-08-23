@@ -10,7 +10,11 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Enumeration;
 
 @Slf4j
 public class MemberAuthenticationFailureHandler implements AuthenticationFailureHandler {  // (1)
@@ -19,10 +23,19 @@ public class MemberAuthenticationFailureHandler implements AuthenticationFailure
                                         HttpServletResponse response,
                                         AuthenticationException exception) throws IOException {
         // 인증 실패 시, 에러 로그를 기록하거나 error response를 전송할 수 있다.
+<<<<<<< HEAD
         log.info("request Authorization 값 " + request.getHeader("Authorization"));
         log.info("response Authorization 값 " + response.getHeader("Authorization"));
         log.info("request userProfile 값 " + request.getHeader("userProfile"));
         log.info("response userProfile 값 " + response.getHeader("userProfile"));
     }
 
+=======
+        log.info("request Authorization 값 "+ request.getHeader("Authorization"));
+        log.info("response Authorization 값 "+ response.getHeader("Authorization"));
+        log.info("request userProfile 값 "+ request.getHeader("userProfile"));
+        log.info("response userProfile 값 "+ response.getHeader("userProfile"));
+
+    }
+>>>>>>> dbdf443fec665edebafd556406b80499ed10b7f2
 }

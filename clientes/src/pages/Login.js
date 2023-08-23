@@ -22,22 +22,41 @@ const Login = () => {
       return false;
     }
 
+    // 서버에서 받아온 accessToken
+    let accessToken = ''; // 초기화
+
     axios
       .post(
-        'https://f53f-2406-5900-1084-b81a-1592-6236-d078-6c13.ngrok-free.app/members/membership',
+        'http://ec2-52-79-212-94.ap-northeast-2.compute.amazonaws.com:8080/auth/login',
         {
           email: email,
           password: password,
         },
+        {
+          headers: {
+            Authorization: accessToken, // 헤더에 값을 포함
+          },
+        },
       )
       .then((res) => {
+        console.log('Response Object:', res); // 응답 객체 자체를 로그로 출력
+        console.log('Response Object:', res.data);
         console.log('success!');
-        console.log('User token', res.data.jwt);
-        localStorage.setItem('token', res.data.jwt);
+
+        accessToken = res.data.accessToken; // 받아온 accessToken으로 업데이트
+        const refreshToken = res.data.refreshToken;
+
+        console.log('authorization test : ', accessToken);
+        console.log('refreshToken test : ', refreshToken);
+
+        localStorage.setItem('accessToken', accessToken);
+        localStorage.setItem('refreshToken', refreshToken);
+
         navigate('/');
       })
       .catch((err) => {
         console.log('error', err.res);
+        alert('로그인 실패');
       });
   };
 
@@ -56,8 +75,10 @@ const Login = () => {
               fill="#F48024"
             />
           </svg>
-          <div className="w-72 flex items-center justify-center bg-white  border border-zinc-200 rounded-md p-2.5 drop-shadow my-1.5 cursor-pointer">
-            <div>
+
+          {/* 구글 로그인 버튼 */}
+          <a href="/oauth2/authorization/google">
+            <button className="w-72 flex items-center justify-center bg-white  border border-zinc-200 rounded-md p-2.5 drop-shadow my-1.5 cursor-pointer">
               <svg
                 aria-hidden="true"
                 className="native svg-icon iconGoogle"
@@ -82,9 +103,11 @@ const Login = () => {
                   d="M8.98 4.18c1.17 0 2.23.4 3.06 1.2l2.3-2.3A8 8 0 0 0 1.83 5.4L4.5 7.49a4.77 4.77 0 0 1 4.48-3.3Z"
                 />
               </svg>
-            </div>
-            <h1 className="pl-1 text-sm"> Log in with Google</h1>
-          </div>
+              <h1 className="pl-1 text-sm"> Log in with Google</h1>
+            </button>
+          </a>
+
+          {/* 카카오 로그인 버튼 */}
           <div className="w-72 flex items-center justify-center bg-[#FCEC4F] border border-zinc-200 rounded-md p-2.5 drop-shadow my-1.5 cursor-not-allowed">
             <div>
               <img
@@ -95,6 +118,8 @@ const Login = () => {
             </div>
             <h1 className="pl-1 text-yellow-900 text-sm"> Log in with Kakao</h1>
           </div>
+
+          {/* 네이버 로그인 버튼 */}
           <div className="w-72 flex items-center justify-center bg-[#03c75a] border border-zinc-200 rounded-md p-2.5 drop-shadow  my-1.5 mb-4 cursor-not-allowed">
             <div>
               <img

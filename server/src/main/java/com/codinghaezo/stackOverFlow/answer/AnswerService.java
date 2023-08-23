@@ -1,7 +1,7 @@
 package com.codinghaezo.stackOverFlow.answer;
 
 import com.codinghaezo.stackOverFlow.answer.comment.Comment;
-import com.codinghaezo.stackOverFlow.answer.comment.CommentDto;
+
 import com.codinghaezo.stackOverFlow.answer.comment.CommentRepository;
 import com.codinghaezo.stackOverFlow.exception.BusinessLogicException;
 import com.codinghaezo.stackOverFlow.exception.ExceptionCode;
@@ -20,7 +20,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class AnswerService {
+public class    AnswerService {
     private final AnswerRepository answerRepository;
     private final MemberRepository memberRepository;
 
@@ -33,6 +33,7 @@ public class AnswerService {
         this.memberRepository = memberRepository;
         this.commentRepository = commentRepository;
     }
+
 
     public Answer findAnswer(long answerId) {
         return answerRepository.findById(answerId).orElseThrow();
@@ -54,7 +55,9 @@ public class AnswerService {
             List<AnswerDto.CommentResponseDTO> commentResponseDTOs = new ArrayList<>();
             List<Comment> comments = commentRepository.findByAnswerIdWithDetails(answer.getAnswerId());
             for(Comment comment : comments){
-               AnswerDto.CommentResponseDTO commentDTO = new AnswerDto.CommentResponseDTO();
+
+                AnswerDto.CommentResponseDTO commentDTO = new AnswerDto.CommentResponseDTO();
+
                 commentDTO.setCommentId(comment.getCommentId());
                 commentDTO.setContent(comment.getContent());
                 commentDTO.setUserEmail(comment.getMember().getEmail());
